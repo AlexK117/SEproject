@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour {
 
-  public const float MoveSpeed = 3;
+    public const float MoveSpeed = 3;
 	// Use this for initialization
 	void Start () {
 		
@@ -27,5 +27,6 @@ public class PlayerControls : MonoBehaviour {
     {
       this.transform.position = new Vector3(0, 0, 0);
     }
+    
   }
 }
