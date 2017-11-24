@@ -4,29 +4,62 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour {
 
-    public const float MoveSpeed = 3;
-	// Use this for initialization
-	void Start () {
-		
-	}
+  public const float MoveSpeed = 6;
+  public const float JumpHeight = 8;
+  [SerializeField] private LayerMask whatIsGround;
+
+  private Transform groundCheck;
+  private bool isGrounded = false;
+
+  // Use this for initialization
+  void Start ()
+  {
+    groundCheck = transform.Find("GroundCheck");
+  }
 	
 	// Update is called once per frame
-	void Update () {
-		if(Input.GetKey(KeyCode.D))
-    { 
-      ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity = new Vector2(MoveSpeed, ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity.y);
+	void FixedUpdate () {
+    isGrounded = false;
+    Vector2 vel = ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity;
+
+    // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
+    // This can be done using layers instead but Sample Assets will not overwrite your project settings.
+    Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, 0.2f, whatIsGround);
+    for (int i = 0; i < colliders.Length; i++)
+    {
+      if (colliders[i].gameObject != gameObject)
+      isGrounded = true;  
+    }
+
+    if (Input.GetKey(KeyCode.RightArrow))
+    {
+      vel.x += isGrounded ? MoveSpeed : MoveSpeed / 10;
       this.transform.rotation = new Quaternion(0, 0, 0, 0);
     }
-    if (Input.GetKey(KeyCode.A))
+    if (Input.GetKey(KeyCode.LeftArrow))
     {
-      ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity = new Vector2(-MoveSpeed, ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity.y);
+      vel.x -= isGrounded ? MoveSpeed : MoveSpeed / 10;
       this.transform.rotation = new Quaternion(0, 180, 0, 0);
     }
+    if(Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
+    {
+      vel.y += JumpHeight;
+    }
+
+    if(isGrounded)
+    {
+      vel.x *= 0.4f;
+    }
+    else
+    {
+      vel.x *= 0.9f;
+    }
+
+    ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity = vel;
 
     if (this.transform.position.y < -10)
     {
       this.transform.position = new Vector3(0, 0, 0);
     }
-    
   }
 }
