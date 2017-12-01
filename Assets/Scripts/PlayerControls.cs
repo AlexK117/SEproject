@@ -6,15 +6,23 @@ public class PlayerControls : MonoBehaviour {
 
   public const float MoveSpeed = 6;
   public const float JumpHeight = 8;
-  [SerializeField] private LayerMask whatIsGround;
+  [SerializeField] private LayerMask whatIsGround;  //WhatIsGround? Baby don't hurt me, don't hurt me, no more
 
   private Transform groundCheck;
   private bool isGrounded = false;
+
+  //For Player animations
+  private GameObject anim;
+  private Animator myAnimator;
 
   // Use this for initialization
   void Start ()
   {
     groundCheck = transform.Find("GroundCheck");
+
+    //For Player animations
+    anim = GameObject.Find("Animations");
+    myAnimator = anim.GetComponent<Animator>();
   }
 	
 	// Update is called once per frame
@@ -49,17 +57,21 @@ public class PlayerControls : MonoBehaviour {
     if(isGrounded)
     {
       vel.x *= 0.4f;
+      myAnimator.SetFloat("speed", Mathf.Abs(vel.x));
     }
     else
     {
       vel.x *= 0.9f;
+      myAnimator.SetFloat("speed", 0);
     }
 
     ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity = vel;
 
     if (this.transform.position.y < -10)
     {
-      this.transform.position = new Vector3(0, 0, 0);
+      this.transform.position = new Vector3(0, 0, -0.1f);
     }
+
+    
   }
 }
