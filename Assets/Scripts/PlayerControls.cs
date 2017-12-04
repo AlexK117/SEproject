@@ -26,7 +26,7 @@ public class PlayerControls : MonoBehaviour {
   }
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
     isGrounded = false;
     Vector2 vel = ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity;
 
