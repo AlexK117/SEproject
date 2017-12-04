@@ -53,6 +53,10 @@ public class PlayerControls : MonoBehaviour {
     {
       vel.y += JumpHeight;
     }
+    if(Input.GetKeyDown(KeyCode.Space))
+    {
+      GameManager.instance.splash(transform.position + Vector3.down*0.3f);
+    }
 
     if(isGrounded)
     {
