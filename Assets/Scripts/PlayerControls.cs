@@ -11,6 +11,7 @@ public class PlayerControls : MonoBehaviour {
   private Transform groundCheck;
   private bool isGrounded = false;
 
+
   //For Player animations
   private GameObject anim;
   private Animator myAnimator;
@@ -51,7 +52,7 @@ public class PlayerControls : MonoBehaviour {
     }
     if(Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
     {
-      vel.y += JumpHeight;
+            vel.y += JumpHeight;
     }
 
     if(isGrounded)
