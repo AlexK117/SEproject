@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Scenes/Level4.unity
-=======
-- path: Assets/Scenes/Grass/Level5.unity
->>>>>>> 774d257a0e79265f19fd7c09d623e94580077ec5
+- path: Assets/Scenes/Main.unity
   isLoaded: 1
   isActive: 1
