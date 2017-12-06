@@ -6,7 +6,8 @@ public class PlayerControls : MonoBehaviour {
 
   public const float MoveSpeed = 6;
   public const float JumpHeight = 8;
-  [SerializeField] private LayerMask whatIsGround;  //WhatIsGround? Baby don't hurt me, don't hurt me, no more
+  [SerializeField] private LayerMask whatIsGround;  //WhatIsGround?
+  public AudioClip bla;
 
   private Transform groundCheck;
   private bool isGrounded = false;
@@ -56,6 +57,7 @@ public class PlayerControls : MonoBehaviour {
     if(Input.GetKeyDown(KeyCode.Space))
     {
       GameManager.instance.splash(transform.position + Vector3.down*0.3f);
+      AudioManager.play(bla);
     }
 
     if(isGrounded)
