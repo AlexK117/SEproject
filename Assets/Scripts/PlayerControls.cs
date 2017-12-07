@@ -14,7 +14,7 @@ public class PlayerControls : MonoBehaviour {
 
 
   //For Player animations
-  private GameObject anim;
+  private Transform anim;
   private Animator myAnimator;
 
   // Use this for initialization
@@ -23,7 +23,7 @@ public class PlayerControls : MonoBehaviour {
     groundCheck = transform.Find("GroundCheck");
 
     //For Player animations
-    anim = GameObject.Find("Animations");
+    anim = transform.Find("Animations");
     myAnimator = anim.GetComponent<Animator>();
   }
 	
@@ -55,22 +55,17 @@ public class PlayerControls : MonoBehaviour {
     {
             vel.y += JumpHeight;
     }
-    if(Input.GetKeyDown(KeyCode.Space))
-    {
-      GameManager.instance.splash(transform.position + Vector3.down*0.3f);
-      AudioManager.play(bla);
-    }
 
     if(isGrounded)
     {
       vel.x *= 0.4f;
-      myAnimator.SetFloat("speed", Mathf.Abs(vel.x));
     }
     else
     {
       vel.x *= 0.9f;
-      myAnimator.SetFloat("speed", 0);
     }
+    myAnimator.SetFloat("speed", Mathf.Abs(vel.x));
+    myAnimator.SetBool("Ground", isGrounded);
 
     ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity = vel;
 
@@ -78,7 +73,15 @@ public class PlayerControls : MonoBehaviour {
     {
       this.transform.position = new Vector3(0, 0, -0.1f);
     }
+  }
 
-    
+  void OnCollisionEnter2D(Collision2D coll)
+  {
+    if (coll.gameObject.tag == "Enemy")
+    {
+      AudioManager.play(bla);
+      GameManager.splash(coll.gameObject.transform.position + Vector3.down * 0.1f);
+      Destroy(coll.gameObject);
+    }
   }
 }

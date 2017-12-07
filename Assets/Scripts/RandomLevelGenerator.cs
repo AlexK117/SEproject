@@ -5,8 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class RandomLevelGenerator : MonoBehaviour {
 
+  [System.Serializable]
+  public class levelType  {    public string name; public int count;  }
+
   public Transform player;
-  public int levelCount;
+  public levelType[] levelTypes;
 
   float loadThreshhold = -1000;
   Vector3 nextLoadPosition = new Vector2(-2, 0);
@@ -21,7 +24,7 @@ public class RandomLevelGenerator : MonoBehaviour {
 		if (!loadingScene && player.position.x > loadThreshhold)
     {
       SceneManager.sceneLoaded += sceneLoaded;
-      SceneManager.LoadSceneAsync("Scenes/Grass/Level" + Random.Range(1, levelCount+1), LoadSceneMode.Additive);
+      SceneManager.LoadSceneAsync("Scenes/" + levelTypes[0].name + "/Level" + Random.Range(1, levelTypes[0].count + 1), LoadSceneMode.Additive);
       loadingScene = true;
     }
     Debug.DrawLine(new Vector3(loadThreshhold, -20, -5), new Vector3(loadThreshhold, 20, -5), Color.red);
