@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
   public GameObject[] bloodPrefabs;
 
   public static GameManager instance;
+  public static int difficulty = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -19,11 +20,10 @@ public class GameManager : MonoBehaviour
 		
 	}
 
-  public void splash (Vector3 position)
+  public static void splash (Vector3 position)
   {
-    float scale = Random.Range(1.0f, 2.0f);
-    var blood = Instantiate(bloodPrefabs[Random.Range(0, bloodPrefabs.Length)], new Vector3(position.x, position.y, 0), Quaternion.AngleAxis(Random.Range(0.0f, 360.0f), Vector3.forward));
+    float scale = Random.Range(0.75f, 1.5f);
+    var blood = Instantiate(instance.bloodPrefabs[Random.Range(0, instance.bloodPrefabs.Length)], new Vector3(position.x, position.y, -1f), Quaternion.AngleAxis(Random.Range(0.0f, 360.0f), Vector3.forward));
     blood.transform.localScale = new Vector3(scale, scale);
-    ((SpriteRenderer)blood.GetComponent<SpriteRenderer>()).flipX = Random.value < 0.5f;
   }
 }
