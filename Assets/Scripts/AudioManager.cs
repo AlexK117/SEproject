@@ -1,33 +1,50 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.Audio;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour {
+
+public class AudioManager : MonoBehaviour
+{
+
+  public Sound[] sounds;
 
   public static AudioManager instance;
 
-  public AudioSource sfx;
-  public AudioSource bgm;
-
-	// Use this for initialization
-	void Start () {
-    instance = this;
-	}
-	
-  private void playSound(AudioClip sound, float volume = 1f, float pitch = 1f)
+  // Use this for initialization
+  private void Awake()
   {
-    if(sfx.isPlaying)
+    if (instance == null)
+      instance = this;
+    else
     {
-      sfx.Stop();
+      Destroy(gameObject);
+      return;
     }
-    sfx.clip = sound;
-    sfx.volume = volume;
-    sfx.pitch = pitch;
-    sfx.Play();
+
+    //No interruption beetween scenes(?)
+    DontDestroyOnLoad(gameObject);
+
+    foreach (Sound s in sounds)
+    {
+      s.source = gameObject.AddComponent<AudioSource>();
+      s.source.clip = s.clip;
+
+      s.source.volume = s.volume;
+      s.source.pitch = s.pitch;
+      s.source.loop = s.loop;
+      s.source.playOnAwake = s.playOnWake;
+    }
   }
 
-  public static void play(AudioClip sound, float volume = 1f, float pitch = 1f)
+  private void Start()
   {
-    instance.playSound(sound, volume, pitch);
+    Play("Theme");
+  }
+
+  public static void Play(string name)
+  {
+    Sound s = System.Array.Find(instance.sounds, sound => sound.name == name);
+    if (s == null)
+      return;
+    s.source.Play();
   }
 }

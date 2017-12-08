@@ -7,7 +7,7 @@ public class PlayerControls : MonoBehaviour {
   public const float MoveSpeed = 6;
   public const float JumpHeight = 8;
   [SerializeField] private LayerMask whatIsGround;  //WhatIsGround?
-  public AudioClip bla;
+  
 
   private Transform groundCheck;
   private bool isGrounded = false;
@@ -53,7 +53,8 @@ public class PlayerControls : MonoBehaviour {
     }
     if(Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
     {
-            vel.y += JumpHeight;
+      vel.y += JumpHeight;
+      AudioManager.Play("Jump");
     }
 
     if(isGrounded)
@@ -77,9 +78,10 @@ public class PlayerControls : MonoBehaviour {
 
   void OnCollisionEnter2D(Collision2D coll)
   {
+
     if (coll.gameObject.tag == "Enemy")
     {
-      AudioManager.play(bla);
+      AudioManager.Play("Blow");
       GameManager.splash(coll.gameObject.transform.position + Vector3.down * 0.1f);
       Destroy(coll.gameObject);
     }
