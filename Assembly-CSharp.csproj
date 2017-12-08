@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\AudioManager.cs" />
      <Compile Include="Assets\Scripts\Bunny.cs" />
      <Compile Include="Assets\Scripts\CameraControler.cs" />
+     <Compile Include="Assets\Scripts\DestroyOnLoad.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\PlayerControls.cs" />
      <Compile Include="Assets\Scripts\RandomLevelGenerator.cs" />
