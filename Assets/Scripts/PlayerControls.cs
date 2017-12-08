@@ -29,6 +29,11 @@ public class PlayerControls : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+    if (Random.value < 0.001f)
+    {
+      AudioManager.Play("Cough", false);
+    }
+
     isGrounded = false;
     Vector2 vel = ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity;
 
@@ -60,6 +65,14 @@ public class PlayerControls : MonoBehaviour {
     if(isGrounded)
     {
       vel.x *= 0.4f;
+      if (Mathf.Abs(vel.x) > 0.2f)
+      {
+        AudioManager.Play("Walk", false);
+      }
+      else
+      {
+        AudioManager.Stop("Walk");
+      }
     }
     else
     {

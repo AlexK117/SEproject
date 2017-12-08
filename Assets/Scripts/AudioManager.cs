@@ -40,11 +40,22 @@ public class AudioManager : MonoBehaviour
     Play("Theme");
   }
 
-  public static void Play(string name)
+  public static void Play(string name, bool force = true)
   {
     Sound s = System.Array.Find(instance.sounds, sound => sound.name == name);
     if (s == null)
       return;
-    s.source.Play();
+    if (force || !s.source.isPlaying)
+    {
+      s.source.Play();
+    }
+  }
+
+  public static void Stop(string name)
+  {
+    Sound s = System.Array.Find(instance.sounds, sound => sound.name == name);
+    if (s == null)
+      return;
+    s.source.Stop();
   }
 }
