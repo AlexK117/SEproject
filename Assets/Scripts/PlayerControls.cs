@@ -29,7 +29,7 @@ public class PlayerControls : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-    if (Random.value < 0.001f)
+    if (Random.value < 0.0005f)
     {
       AudioManager.Play("Cough", false);
     }
@@ -77,6 +77,7 @@ public class PlayerControls : MonoBehaviour {
     else
     {
       vel.x *= 0.9f;
+      AudioManager.Stop("Walk");
     }
     myAnimator.SetFloat("speed", Mathf.Abs(vel.x));
     myAnimator.SetBool("Ground", isGrounded);
