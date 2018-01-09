@@ -27,7 +27,6 @@ public class AudioManager : MonoBehaviour
     {
       s.source = gameObject.AddComponent<AudioSource>();
       s.source.clip = s.clip;
-
       s.source.volume = s.volume;
       s.source.pitch = s.pitch;
       s.source.loop = s.loop;
@@ -38,24 +37,28 @@ public class AudioManager : MonoBehaviour
   private void Start()
   {
     Play("Theme");
+    Play("Background1");
   }
 
   public static void Play(string name, bool force = true)
   {
     Sound s = System.Array.Find(instance.sounds, sound => sound.name == name);
+
     if (s == null)
       return;
+
     if (force || !s.source.isPlaying)
-    {
       s.source.Play();
-    }
+    
   }
 
   public static void Stop(string name)
   {
     Sound s = System.Array.Find(instance.sounds, sound => sound.name == name);
+
     if (s == null)
       return;
+
     s.source.Stop();
   }
 }
