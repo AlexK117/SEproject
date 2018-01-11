@@ -35,9 +35,13 @@ public class PlayerControls : MonoBehaviour
     if (!GameManager.gameOver)    // Player is only controllable when not in Game-Over-Mode
     {
 
-      if (Random.value < 0.0005f)
+      if (Random.value < 0.0002f)
       {
         AudioManager.Play("Cough", false);
+      }
+      if (Random.value < 0.0002f && !AudioManager.IsPlaying("Cough"))
+      {
+        AudioManager.Play("Cough2", false);
       }
 
       isGrounded = false;

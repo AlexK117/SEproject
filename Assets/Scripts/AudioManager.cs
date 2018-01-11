@@ -6,14 +6,13 @@ public class AudioManager : MonoBehaviour
 {
 
   public Sound[] sounds;
-
-  public static AudioManager instance;
+  public static AudioManager audioManager;
 
   // Use this for initialization
   private void Awake()
   {
-    if (instance == null)
-      instance = this;
+    if (audioManager == null)
+      audioManager = this;
     else
     {
       Destroy(gameObject);
@@ -32,6 +31,7 @@ public class AudioManager : MonoBehaviour
       s.source.loop = s.loop;
       s.source.playOnAwake = s.playOnWake;
     }
+   
   }
 
   private void Start()
@@ -40,25 +40,42 @@ public class AudioManager : MonoBehaviour
     Play("Background1");
   }
 
+  public Sound this[string name]
+  {
+    get
+    {
+      foreach(Sound s in sounds)
+      {
+        if (s.name == name)
+          return s;
+      }
+      return null;
+    }
+  }
   public static void Play(string name, bool force = true)
   {
-    Sound s = System.Array.Find(instance.sounds, sound => sound.name == name);
-
+    Sound s = audioManager[name];
     if (s == null)
       return;
 
     if (force || !s.source.isPlaying)
+    {
       s.source.Play();
-    
+    }
   }
 
   public static void Stop(string name)
   {
-    Sound s = System.Array.Find(instance.sounds, sound => sound.name == name);
+    Sound s = audioManager[name];
 
     if (s == null)
       return;
 
     s.source.Stop();
+  }
+  public static bool IsPlaying(string name)
+  {
+    Sound s = audioManager[name];
+    return s.source.isPlaying;
   }
 }
