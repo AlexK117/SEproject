@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Bunny : MonoBehaviour {
   
@@ -21,6 +22,8 @@ public class Bunny : MonoBehaviour {
   private int facing = 1;
   private int waitTimer = 0;
 
+  public AudioSource BunnyJump;
+
   // Use this for initialization
   void Start()
   {
@@ -31,6 +34,15 @@ public class Bunny : MonoBehaviour {
     //For Player animations
     anim = transform.Find("Animations");
     myAnimator = anim.GetComponent<Animator>();
+
+    BunnyJump = gameObject.AddComponent<AudioSource>();
+    BunnyJump.clip = AudioManager.audioManager["JumpBunny"].clip;
+    BunnyJump.pitch = 1.35f;
+    BunnyJump.volume = 0.2f;
+    BunnyJump.spatialBlend = 1f;
+    BunnyJump.minDistance = 1f;
+    BunnyJump.maxDistance = 7f;
+    BunnyJump.rolloffMode = AudioRolloffMode.Linear;
   }
 
   void FixedUpdate()
@@ -107,6 +119,7 @@ public class Bunny : MonoBehaviour {
           vel.y = 3;
           isGrounded = false;
           state = State.JUMP;
+          BunnyJump.Play();
         }
       }
     }
