@@ -29,7 +29,7 @@ public class Weapon : MonoBehaviour {
   public void resetTransform(Transform t)
   {
     transform.rotation = t.rotation;
-    transform.position = t.position + new Vector3(x, y, z);
+    transform.position = t.position + new Vector3(t.rotation.y > 0 ? -x : x, y, z);
   }
 
   public void flip(float z)

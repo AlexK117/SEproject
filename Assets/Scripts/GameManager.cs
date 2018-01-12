@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
   public static bool restart;
 
   public static GameManager instance;
-  public static int difficulty = 0;
+  public static int difficulty = 10;
 
   public static int distance = 0;
   public static int bonusScore = 0;

@@ -12,7 +12,7 @@ public class RandomLevelGenerator : MonoBehaviour {
   public levelType[] levelTypes;
 
   float loadThreshhold = -1000;
-  Vector3 nextLoadPosition = new Vector2(-8, 0);
+  Vector3 nextLoadPosition = new Vector3(-8, 0, 0);
   bool loadingScene = false;
 
   private int currentLevel = 0;
@@ -20,6 +20,7 @@ public class RandomLevelGenerator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+    nextLoadPosition = new Vector3(-8, 0, 0);
     SceneManager.sceneLoaded += sceneLoaded;
     SceneManager.LoadSceneAsync("Scenes/Grass/Level0", LoadSceneMode.Additive);
     loadingScene = true;
