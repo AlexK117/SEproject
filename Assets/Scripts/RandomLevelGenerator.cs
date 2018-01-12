@@ -15,6 +15,9 @@ public class RandomLevelGenerator : MonoBehaviour {
   Vector3 nextLoadPosition = new Vector2(-8, 0);
   bool loadingScene = false;
 
+  private int currentLevel = 0;
+  private int counterUntilNextLevel = 0;
+
 	// Use this for initialization
 	void Start () {
     SceneManager.sceneLoaded += sceneLoaded;
@@ -27,7 +30,7 @@ public class RandomLevelGenerator : MonoBehaviour {
 		if (!loadingScene && player.position.x > loadThreshhold)
     {
       SceneManager.sceneLoaded += sceneLoaded;
-      SceneManager.LoadSceneAsync("Scenes/" + levelTypes[0].name + "/Level" + Random.Range(1, levelTypes[0].count + 1), LoadSceneMode.Additive);
+      SceneManager.LoadSceneAsync("Scenes/" + levelTypes[currentLevel].name + "/Level" + Random.Range(1, levelTypes[currentLevel].count + 1), LoadSceneMode.Additive);
       loadingScene = true;
     }
     Debug.DrawLine(new Vector3(loadThreshhold, -20, -5), new Vector3(loadThreshhold, 20, -5), Color.red);
@@ -71,7 +74,12 @@ public class RandomLevelGenerator : MonoBehaviour {
     {
       sceneObject.transform.position += moveDistance;
     }
-
+    counterUntilNextLevel++;
+    if (counterUntilNextLevel > 10)
+    {
+      counterUntilNextLevel = 0;
+      currentLevel = Random.Range(0, levelTypes.Length);
+    }
     loadingScene = false;
   }
 }
