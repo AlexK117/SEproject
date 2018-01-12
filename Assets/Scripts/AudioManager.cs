@@ -19,9 +19,6 @@ public class AudioManager : MonoBehaviour
       return;
     }
 
-    //No interruption beetween scenes(?)
-    DontDestroyOnLoad(gameObject);
-
     foreach (Sound s in sounds)
     {
       s.source = gameObject.AddComponent<AudioSource>();

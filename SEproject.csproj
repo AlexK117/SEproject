@@ -50,7 +50,11 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEditor">
+<<<<<<< HEAD
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+=======
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+>>>>>>> 3fa08c189e5d20bd08748cd64dc80904155c449c
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
@@ -140,10 +144,17 @@
       <HintPath>Library\UnityAssemblies\UnityEngine.UIElementsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.StyleSheetsModule">
+<<<<<<< HEAD
       <HintPath>Library\UnityAssemblies\UnityEngine.StyleSheetsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AudioModule">
       <HintPath>Library\UnityAssemblies\UnityEngine.AudioModule.dll</HintPath>
+=======
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.StyleSheetsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll</HintPath>
+>>>>>>> 3fa08c189e5d20bd08748cd64dc80904155c449c
     </Reference>
     <Reference Include="UnityEngine.GameCenterModule">
       <HintPath>Library\UnityAssemblies\UnityEngine.GameCenterModule.dll</HintPath>
@@ -167,21 +178,33 @@
       <HintPath>Library\UnityAssemblies\UnityEngine.Physics2DModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ScreenCaptureModule">
+<<<<<<< HEAD
       <HintPath>Library\UnityAssemblies\UnityEngine.ScreenCaptureModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpriteMaskModule">
       <HintPath>Library\UnityAssemblies\UnityEngine.SpriteMaskModule.dll</HintPath>
+=======
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll</HintPath>
+>>>>>>> 3fa08c189e5d20bd08748cd64dc80904155c449c
     </Reference>
     <Reference Include="UnityEngine.TerrainModule">
       <HintPath>Library\UnityAssemblies\UnityEngine.TerrainModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TilemapModule">
+<<<<<<< HEAD
       <HintPath>Library\UnityAssemblies\UnityEngine.TilemapModule.dll</HintPath>
+=======
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll</HintPath>
+>>>>>>> 3fa08c189e5d20bd08748cd64dc80904155c449c
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
       <HintPath>Library\UnityAssemblies\UnityEngine.VideoModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.WindModule">
+<<<<<<< HEAD
       <HintPath>Library\UnityAssemblies\UnityEngine.WindModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
@@ -195,6 +218,18 @@
     </Reference>
     <Reference Include="UnityEngine.Purchasing">
       <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
+=======
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>C:/Users/eugen/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>C:/Users/eugen/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
+>>>>>>> 3fa08c189e5d20bd08748cd64dc80904155c449c
     </Reference>
   </ItemGroup>
   <ItemGroup>
