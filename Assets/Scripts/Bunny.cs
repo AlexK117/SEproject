@@ -128,11 +128,20 @@ public class Bunny : MonoBehaviour {
 
     ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity = vel;
 
-    if (this.transform.position.y < -10)
+    if (this.transform.position.y < -50)
     {
       Destroy(gameObject);
     }
 
 
+  }
+
+  public void die()
+  {
+    AudioManager.Play("Blow");
+    GameManager.splash(transform.position + Vector3.down * 0.1f);
+    GameManager.drop(transform.position);
+    Destroy(gameObject);
+    GameManager.bonusScore += 100;
   }
 }
