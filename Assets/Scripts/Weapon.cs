@@ -51,6 +51,7 @@ public class Weapon : MonoBehaviour {
           bullet.speed = 0.2f;
           bullet.angle = transform.parent.rotation.y * 180;
           reload = 20;
+          AudioManager.Play("Pistol");
           ammo -= 0.02f;
           break;
         case 1:
@@ -59,6 +60,7 @@ public class Weapon : MonoBehaviour {
           bullet.speed = 0.4f;
           bullet.angle = transform.parent.rotation.y * 180;
           reload = 5;
+          AudioManager.Play("Maschinegun");
           ammo -= 0.005f;
           break;
         case 2:
@@ -70,6 +72,7 @@ public class Weapon : MonoBehaviour {
             bullet.angle = i + transform.parent.rotation.y * 180;
             reload = 35;
           }
+          AudioManager.Play("Shotgun");
           ammo -= 0.05f;
           break;
       }
