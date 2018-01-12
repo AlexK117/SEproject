@@ -81,6 +81,8 @@ public class GameManager : MonoBehaviour
     gameOver = true;
     restart = true;
 
+    AudioManager.Stop("Theme");
+    AudioManager.Play("GameOver");
     Camera mainCam;
     mainCam = Camera.main;
 

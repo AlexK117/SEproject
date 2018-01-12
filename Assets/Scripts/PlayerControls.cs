@@ -133,6 +133,7 @@ public class PlayerControls : MonoBehaviour
       {
         myAnimator.SetTrigger("Attack");
         attacking = true;
+        AudioManager.Play("Hit");
       }
       if (Input.GetKey(KeyCode.S) && !attacking)
       {
