@@ -7,18 +7,19 @@ public class Bullet : MonoBehaviour {
   public float lifetime;
   public float speed;
   public float angle;
-
-	// Use this for initialization
+  
+  //set starting angle and lifetime of the bullet
 	void Start () {
     Destroy(gameObject, lifetime);
     this.transform.Rotate(new Vector3(0, 0, 1), Mathf.Deg2Rad * angle);
 	}
 	
-	// Update is called once per frame
+  //move bullet according to speed and angle
 	void Update () {
     this.transform.position = new Vector3(this.transform.position.x + speed * Mathf.Cos(Mathf.Deg2Rad * angle), this.transform.position.y + speed * Mathf.Sin(Mathf.Deg2Rad * angle), this.transform.position.z);
   }
 
+  //kill enemies it collides with
   void OnTriggerEnter2D(Collider2D coll)
   {
     if (coll.gameObject.tag == "Enemy")

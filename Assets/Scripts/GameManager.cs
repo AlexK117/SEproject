@@ -15,20 +15,19 @@ public class GameManager : MonoBehaviour
   public static bool gameOver;
   public static bool restart;
 
+  //static reference to this instance
   public static GameManager instance;
   public static int difficulty = 10;
 
   public static int distance = 0;
   public static int bonusScore = 0;
-
-	// Use this for initialization
+  
 	void Start () {
       instance = this;
       gameOver = false;
       restart = false;
 	}
 	
-	// Update is called once per frame
 	void Update ()
   {
     // Reloading the level when in Game-Over-Mode and when Return is pressed
@@ -46,6 +45,7 @@ public class GameManager : MonoBehaviour
     score.text = "Score: " + (distance + bonusScore);
 	}
 
+  //Instantiate a blood splatter on the given position
   public static void splash (Vector3 position)
   {
     float scale = Random.Range(0.75f, 1.5f);
@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
     blood.transform.localScale = new Vector3(scale, scale);
     Instantiate(instance.bloodSpawner, new Vector3(position.x, position.y, -0.2f), Quaternion.identity);
   }
+
+  //Instantiate a random weapon or ammunition drop on the given position
   public static void drop(Vector3 position)
   {
     GameObject drop = null;

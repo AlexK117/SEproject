@@ -6,9 +6,9 @@ public class AudioManager : MonoBehaviour
 {
 
   public Sound[] sounds;
+  //static reference to this instance
   public static AudioManager audioManager;
-
-  // Use this for initialization
+  
   private void Awake()
   {
     if (audioManager == null)
@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
       return;
     }
 
+    //add a audio source component for each audio clip set in the inspector
     foreach (Sound s in sounds)
     {
       s.source = gameObject.AddComponent<AudioSource>();
@@ -31,12 +32,14 @@ public class AudioManager : MonoBehaviour
    
   }
 
+  //Start background music at the beginning of the game
   private void Start()
   {
     Play("Theme");
     Play("Background1");
   }
 
+  //access sounds via name
   public Sound this[string name]
   {
     get
@@ -49,6 +52,7 @@ public class AudioManager : MonoBehaviour
       return null;
     }
   }
+
   public static void Play(string name, bool force = true)
   {
     Sound s = audioManager[name];

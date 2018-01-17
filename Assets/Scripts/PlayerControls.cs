@@ -8,7 +8,7 @@ public class PlayerControls : MonoBehaviour
   public const float MoveSpeed = 6;
   public const float JumpHeight = 8;
   [SerializeField]
-  private LayerMask whatIsGround;  //WhatIsGround?
+  private LayerMask whatIsGround;
   [SerializeField]
   private Collider2D attackHitBox;
   [SerializeField]
@@ -30,8 +30,6 @@ public class PlayerControls : MonoBehaviour
   private Transform anim;
   private Animator myAnimator;
 
-
-  // Use this for initialization
   void Start()
   {
     groundCheck = transform.Find("GroundCheck");
@@ -41,12 +39,12 @@ public class PlayerControls : MonoBehaviour
     myAnimator = anim.GetComponent<Animator>();
   }
 
+  //equips a new weapon: Destroys current weapon, sets the new weapon transforms parent to the player, removes the components that make it a pickup able item and adjusts its position to the players hand
   void equip(GameObject weapon)
   {
     if (currentWeapon != null)
     {
       Destroy(currentWeapon);
-      currentWeapon = null;
     }
     ((Weapon)weapon.GetComponent<Weapon>()).resetTransform(transform);
     weapon.transform.SetParent(transform);
@@ -55,17 +53,18 @@ public class PlayerControls : MonoBehaviour
     currentWeapon = weapon;
     ammobarSprite.transform.localScale = new Vector3(((Weapon)currentWeapon.GetComponent<Weapon>()).ammo, 1, 1);
   }
-
-  // Update is called once per frame
+  
   void Update()
   {
     if (!GameManager.gameOver)    // Player is only controllable when not in Game-Over-Mode
     {
+      //keep track of the distance the player has traveled to update the score with
       if ((int)transform.position.x > GameManager.distance)
       {
         GameManager.distance = (int)transform.position.x;
       }
 
+      //play random coughing noises occasionally
       if (Random.value < 0.0002f)
       {
         AudioManager.Play("Cough", false);
@@ -79,7 +78,6 @@ public class PlayerControls : MonoBehaviour
       Vector2 vel = ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity;
 
       // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
-      // This can be done using layers instead but Sample Assets will not overwrite your project settings.
       Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, 0.2f, whatIsGround);
       for (int i = 0; i < colliders.Length; i++)
       {
@@ -87,6 +85,8 @@ public class PlayerControls : MonoBehaviour
           isGrounded = true;
       }
 
+      //left and right input, adjusts velocity on ground and in air (less), rotates the player around and adjusts the weapons z-position
+      //to always be in front of the player even when the object is rotated by 180 degrees along the Y axis
       if (Input.GetKey(KeyCode.RightArrow))
       {
         vel.x += isGrounded ? MoveSpeed : MoveSpeed / 10;
@@ -105,12 +105,15 @@ public class PlayerControls : MonoBehaviour
           ((Weapon)currentWeapon.GetComponent<Weapon>()).flip(-0.15f);
         }
       }
+
+      //jumping
       if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
       {
         vel.y += JumpHeight;
         AudioManager.Play("Jump");
       }
 
+      //friction and walking sounds
       if (isGrounded)
       {
         vel.x *= 0.4f;
@@ -129,6 +132,7 @@ public class PlayerControls : MonoBehaviour
         AudioManager.Stop("Walk");
       }
 
+      //attacking and shooting
       if (Input.GetKeyDown(KeyCode.A) && !attacking)
       {
         myAnimator.SetTrigger("Attack");
@@ -143,6 +147,7 @@ public class PlayerControls : MonoBehaviour
           ((Weapon)currentWeapon.GetComponent<Weapon>()).shoot();
         }
       }
+      //update animator
       myAnimator.SetFloat("speed", Mathf.Abs(vel.x));
       myAnimator.SetBool("Ground", isGrounded);
 
@@ -151,13 +156,14 @@ public class PlayerControls : MonoBehaviour
 
       ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity = vel;
 
-      // Moving player to above -10 if he has fallen off the map
+      // End the game if the player has fallen off the map
       if (this.transform.position.y < -50)
       {
         this.transform.position = new Vector3(-40, 0, -0.1f);
         GameManager.GameOver();
       }
 
+      //make the player sprite flicker while he's invincible after taking a hit from an enemy
       if (invincibilty > 0)
       {
         invincibilty--;
@@ -166,6 +172,7 @@ public class PlayerControls : MonoBehaviour
     }
   }
 
+  //managing health, blood and invicibility when the player takes damage
   private void takeDamage()
   {
     if (invincibilty == 0)
@@ -182,15 +189,16 @@ public class PlayerControls : MonoBehaviour
     }
   }
 
+  //kill enemy when they collide with the attack hitbox
   void OnTriggerEnter2D(Collider2D coll)
   {
-
     if (coll.gameObject.tag == "Enemy")
     {
       ((Bunny)coll.gameObject.GetComponent<Bunny>()).die();
     }
   }
 
+  //manage collisions with enemies, weapon pickups and ammunition
   void OnCollisionEnter2D(Collision2D coll)
   {
     if (coll.gameObject.tag == "Enemy")

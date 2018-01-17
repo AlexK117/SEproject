@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 public class Bunny : MonoBehaviour {
   
   [SerializeField]
-  private LayerMask whatIsGround;  //WhatIsGround?
+  private LayerMask whatIsGround;
 
   private Transform groundCheck;
   private Transform wallCheck;
@@ -15,7 +15,7 @@ public class Bunny : MonoBehaviour {
 
   private enum State { IDLE, JUMP, ATTACK };
 
-  //For Player animations
+  //For animations
   private Transform anim;
   private Animator myAnimator;
   private State state = State.IDLE;
@@ -23,15 +23,13 @@ public class Bunny : MonoBehaviour {
   private int waitTimer = 0;
 
   public AudioSource BunnyJump;
-
-  // Use this for initialization
+  
   void Start()
   {
     groundCheck = transform.Find("GroundCheck");
     wallCheck = transform.Find("WallCheck");
     destinationCheck = transform.Find("DestinationCheck");
-
-    //For Player animations
+    
     anim = transform.Find("Animations");
     myAnimator = anim.GetComponent<Animator>();
 
@@ -50,6 +48,7 @@ public class Bunny : MonoBehaviour {
     if (waitTimer > 0) waitTimer--;
   }
 
+  //Checks if there is a wall in front of the bunny
   private bool isWall()
   {
     Collider2D [] colliders = Physics2D.OverlapCircleAll(wallCheck.position, 0.05f, whatIsGround);
@@ -63,6 +62,7 @@ public class Bunny : MonoBehaviour {
     return false;
   }
 
+  //Cheks if there's ground a jump distance away from the bunny
   private bool validDestination()
   {
     Collider2D[] colliders = Physics2D.OverlapCircleAll(destinationCheck.position, 0.2f, whatIsGround);
@@ -75,12 +75,12 @@ public class Bunny : MonoBehaviour {
     }
     return false;
   }
-
-  // Update is called once per frame
+  
   void Update()
   {
     Vector2 vel = ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity;
 
+    //check if bunny is on the ground
     if (state != State.IDLE && vel.y <= 0) {
       Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, 0.2f, whatIsGround);
       for (int i = 0; i < colliders.Length; i++)
@@ -93,11 +93,13 @@ public class Bunny : MonoBehaviour {
       }
     }
 
+    //friction
     if (isGrounded)
     {
       vel.x *= 0.4f;
     }
 
+    //Bunny AI, determines wether the bunny waits, turns around or jumps whenever it's idle and the wait timer reaches 0
     if (waitTimer == 0 && state == State.IDLE)
     {
       float rnd = Random.value;
@@ -124,10 +126,12 @@ public class Bunny : MonoBehaviour {
       }
     }
     
+    //update animator
     myAnimator.SetBool("Ground", isGrounded);
-
+    //update new calculated velocity
     ((Rigidbody2D)this.GetComponent<Rigidbody2D>()).velocity = vel;
 
+    //destroy bunny when it falls down the map
     if (this.transform.position.y < -50)
     {
       Destroy(gameObject);
@@ -136,6 +140,7 @@ public class Bunny : MonoBehaviour {
 
   }
 
+  //handles sound, blood, drops and score if the bunny dies
   public void die()
   {
     AudioManager.Play("Blow");

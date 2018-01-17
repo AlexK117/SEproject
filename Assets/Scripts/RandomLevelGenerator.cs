@@ -17,8 +17,8 @@ public class RandomLevelGenerator : MonoBehaviour {
 
   private int currentLevel = 0;
   private int counterUntilNextLevel = 0;
-
-	// Use this for initialization
+  
+  //Instantly load the retirement home scene when the game starts
 	void Start () {
     nextLoadPosition = new Vector3(-8, 0, 0);
     SceneManager.sceneLoaded += sceneLoaded;
@@ -26,7 +26,7 @@ public class RandomLevelGenerator : MonoBehaviour {
     loadingScene = true;
   }
 	
-	// Update is called once per frame
+	//Load a new scene when there's none loading right now and the player passes the loading theshhold
 	void Update () {
 		if (!loadingScene && player.position.x > loadThreshhold)
     {
@@ -39,6 +39,7 @@ public class RandomLevelGenerator : MonoBehaviour {
     Debug.DrawLine(nextLoadPosition + Vector3.right - Vector3.up, nextLoadPosition - Vector3.right + Vector3.up, Color.green, 0, false);
   }
 
+  //remove the scene loading handler and initialize the scene after it finished loading
   void sceneLoaded(Scene scene, LoadSceneMode mode)
   {
     SceneManager.sceneLoaded -= sceneLoaded;
@@ -52,6 +53,8 @@ public class RandomLevelGenerator : MonoBehaviour {
       yield return new WaitForEndOfFrame();
     }
 
+    //find the start and end point in the scene, calculate the distance to move each gameobject in the scene so it fits nicely at the end of the last scene
+    //Also update the loading threshhold and the next load position
     Vector3 moveDistance = Vector3.zero;
     GameObject[] sceneObjects = scene.GetRootGameObjects();
     foreach(GameObject sceneObject in sceneObjects)
@@ -59,22 +62,21 @@ public class RandomLevelGenerator : MonoBehaviour {
       if (sceneObject.name == "Start")
       {
         moveDistance = nextLoadPosition - sceneObject.transform.position;
-        Debug.Log(sceneObject.transform.position);
-        Debug.Log(moveDistance);
         loadThreshhold = sceneObject.transform.position.x + moveDistance.x;
-        Debug.Log(loadThreshhold);
       }
       if (sceneObject.name == "End")
       {
         nextLoadPosition = moveDistance + sceneObject.transform.position;
-        Debug.Log(nextLoadPosition);
       }
     }
 
+    //move all objects in the scene according to the previously calculated distance
     foreach (GameObject sceneObject in sceneObjects)
     {
       sceneObject.transform.position += moveDistance;
     }
+
+    //increment the scene counter and change the level type to load after it passes 10 (level types are random and it might be the same as before)
     counterUntilNextLevel++;
     if (counterUntilNextLevel > 10)
     {

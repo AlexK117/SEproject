@@ -5,9 +5,12 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
   [System.Serializable]
-  public class Enemy { public GameObject enemy; public int difficulty; }
-  public Enemy[] enemies;
+  public class EnemyType { public GameObject enemy; public int difficulty; }
+  public EnemyType[] enemies;
 
+
+  //Instantiate one of the given enemy types at the spawners position if they're below the global difficulty level (which increases over time)
+  //This makes it possible to spawn stronger enemys instead of weaker ones the further the game progresses
   void Start()
   {
     int rnd = (int)Random.Range(0, enemies.Length);

@@ -12,13 +12,11 @@ public class Weapon : MonoBehaviour {
 
   private int reload = 0;
   public float ammo = 1f;
-
-  // Use this for initialization
+  
   void Start () {
 		
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		if (reload > 0)
     {
@@ -26,17 +24,20 @@ public class Weapon : MonoBehaviour {
     }
 	}
 
+  //move transform position to the players hand after it has been equipped
   public void resetTransform(Transform t)
   {
     transform.rotation = t.rotation;
     transform.position = t.position + new Vector3(t.rotation.y > 0 ? -x : x, y, z);
   }
 
+  //make sure the weapons z position always stays in front of the player even when he turns around and rotates by 180 degrees around the Y axis
   public void flip(float z)
   {
     transform.position = new Vector3(transform.position.x, transform.position.y, z);
   }
 
+  //spawn bullets with different properties according to each weapon type
   public void shoot()
   {
     if (reload <= 0 && ammo > 0)
